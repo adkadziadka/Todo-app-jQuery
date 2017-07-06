@@ -3,21 +3,29 @@
 <head>
   <meta charset="utf-8">
   <title>TodoList</title>
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Permanent+Marker" rel="stylesheet">
   <style>
     body {
-      font-family: Helvetica, Arial, sans-serif;
-      font-size: 18px;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 20px;
+      background: #70e1f5;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #ffd194, #70e1f5);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #ffd194, #70e1f5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     }
 
     .container {
-      margin: 20px auto;
+      margin: 80px auto;
       width: 500px;
-      border: 1px solid #e6e6e6;
+      border: 1px solid darkgrey;
       border-radius: 3px;
+      background-color: white;
+      font-family: 'Indie Flower', cursive;
     }
 
     h1 {
       text-align: center;
+      font-size: 55px;
     }
 
     form {
@@ -29,8 +37,10 @@
       width: 478px;
       border-radius: 3px;
       border: 1px solid #e6e6e6;
+      background-color: rgba(199, 218, 228, 0.45);
       padding: 10px;
-      font-size: 18px;
+      font-size: 22px;
+      font-family: 'Indie Flower', cursive;
     }
 
     ul#todolist {
@@ -78,7 +88,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>TodoList</h1>
+    <h1>jQuery Todo List</h1>
 
     <form>
       <input type="text" id="new-todo" placeholder="What needs to be done?">
@@ -118,10 +128,15 @@
       var checkbox = this;
 
       $(checkbox).parent().toggleClass("completed");
-    
 
       updateCounters();
     }
+
+    $(document).ready(function() {
+      $("input[type=checkbox]").bind('change', toggleDone);
+    });
+
+    $("form").bind('submit', submitTodo);
 
     function submitTodo(event){
       event.preventDefault(); //prevent from doing default action
@@ -161,22 +176,16 @@
       updateCounters();
     }
 
+      function nextTodoId() {
+        return $(".todo").length + 1;
+    }
+
     function cleanUpDoneTodos(event) {
-      event.preventDefault():
+      event.preventDefault();
       $.when($(".completed").remove())
         .then(updateCounters);
     }
 
-    function nextTodoId() {
-      return $(".todo").length + 1;
-    }
-
-
-    $(document).ready(function() {
-      $("input[type=checkbox]").bind('change', toggleDone);
-    });
-
-    $("form").bind('submit', submitTodo);
 
     $("#clean-up").bind('click', cleanUpDoneTodos);
   </script>
